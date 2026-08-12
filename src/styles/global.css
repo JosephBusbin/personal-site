@@ -1,0 +1,261 @@
+/*
+ * Global design tokens and base typography.
+ *
+ * Dark mode is the only theme by design -- there is no light-mode toggle and no
+ * prefers-color-scheme branch. If a light theme is ever wanted, redefine these
+ * same variables under a media query rather than touching component styles.
+ */
+
+:root {
+  /* --- Color -------------------------------------------------------------
+   * Accent values are fixed by the design document. Never hardcode them in a
+   * component; always reference the variable. */
+  --color-accent: #ef9f27;
+  --color-accent-hover: #fac775;
+  --color-accent-border: #ba7517;
+
+  /* Warm charcoal -- slightly warm-tinted so the amber sits on it calmly. */
+  --color-bg: #16130f;
+  --color-bg-raised: #1e1a15;
+  --color-text: #ede7de;
+  --color-text-muted: #a69c8f;
+  --color-rule: #2e2820;
+
+  /* --- Typography -------------------------------------------------------- */
+  --font-serif: 'Source Serif 4 Variable', 'Source Serif 4', Georgia,
+    'Times New Roman', serif;
+
+  /* Fluid sizes: comfortable on phones, not cartoonish on a wide monitor. */
+  --text-sm: 0.875rem;
+  --text-base: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+  --text-lg: clamp(1.25rem, 1.15rem + 0.4vw, 1.4rem);
+  --text-xl: clamp(1.5rem, 1.3rem + 0.8vw, 1.9rem);
+  --text-2xl: clamp(2rem, 1.6rem + 1.6vw, 2.9rem);
+
+  /* --- Layout ------------------------------------------------------------ */
+  --measure: 34rem; /* ~68 characters -- the readable line length for prose */
+  --width-page: 46rem;
+  --space-gutter: clamp(1.25rem, 5vw, 2.5rem);
+
+  color-scheme: dark;
+}
+
+/* --- Reset-ish ----------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd,
+ul,
+ol {
+  margin: 0;
+}
+
+html {
+  /* Anchors and skip-links land below the sticky header rather than under it. */
+  scroll-padding-top: 5rem;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-serif);
+  font-size: var(--text-base);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+img,
+picture,
+svg {
+  max-width: 100%;
+  display: block;
+}
+
+/* --- Typography ---------------------------------------------------------- */
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 600;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--text-2xl);
+  letter-spacing: -0.015em;
+}
+h2 {
+  font-size: var(--text-xl);
+}
+h3 {
+  font-size: var(--text-lg);
+}
+
+p {
+  text-wrap: pretty;
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-decoration-color: var(--color-accent-border);
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
+  transition: color 120ms ease, text-decoration-color 120ms ease;
+}
+
+a:hover {
+  color: var(--color-accent-hover);
+  text-decoration-color: var(--color-accent-hover);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+code,
+pre,
+kbd {
+  font-family: ui-monospace, 'SFMono-Regular', 'Cascadia Code', Menlo, monospace;
+  font-size: 0.875em;
+}
+
+code {
+  background: var(--color-bg-raised);
+  border: 1px solid var(--color-rule);
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+}
+
+pre {
+  background: var(--color-bg-raised);
+  border: 1px solid var(--color-rule);
+  border-radius: 4px;
+  padding: 1rem 1.15rem;
+  overflow-x: auto;
+}
+
+pre code {
+  background: none;
+  border: 0;
+  padding: 0;
+}
+
+blockquote {
+  border-left: 2px solid var(--color-accent-border);
+  padding-left: 1.25rem;
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--color-rule);
+  margin: 3rem 0;
+}
+
+/* --- Shared utilities ---------------------------------------------------- */
+
+/* Visible only when focused -- lets keyboard users jump past the nav. */
+.skip-link {
+  position: absolute;
+  left: var(--space-gutter);
+  top: 0.5rem;
+  z-index: 10;
+  background: var(--color-bg-raised);
+  border: 1px solid var(--color-accent-border);
+  border-radius: 4px;
+  padding: 0.5rem 0.9rem;
+  transform: translateY(-150%);
+  transition: transform 120ms ease;
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+/* Long-form Markdown output: blog posts, research write-ups, the CV. */
+.prose {
+  max-width: var(--measure);
+}
+
+.prose > * + * {
+  margin-top: 1.35em;
+}
+
+.prose h2 {
+  margin-top: 2.5em;
+}
+
+.prose h3 {
+  margin-top: 2em;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.4rem;
+}
+
+.prose li + li {
+  margin-top: 0.4em;
+}
+
+.prose img {
+  border-radius: 4px;
+  margin-inline: auto;
+}
+
+/* Dates, venues, reading context -- secondary to the title it sits under. */
+.meta {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  letter-spacing: 0.02em;
+}
+
+/* Solid amber call-to-action. Used sparingly -- the GitHub link, CV download. */
+.button {
+  display: inline-block;
+  background: var(--color-accent);
+  color: var(--color-bg);
+  font-weight: 600;
+  text-decoration: none;
+  padding: 0.55rem 1.15rem;
+  border: 1px solid var(--color-accent-border);
+  border-radius: 4px;
+  transition: background-color 120ms ease;
+}
+
+.button:hover {
+  background: var(--color-accent-hover);
+  color: var(--color-bg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

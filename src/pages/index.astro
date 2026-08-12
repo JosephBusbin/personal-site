@@ -1,0 +1,94 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../site';
+import { url } from '../lib/url';
+// Square-cropped at 800x800; Astro emits the optimized, correctly sized WebP.
+// Swap the file at this path to change the photo -- no other edit needed.
+import headshot from '../assets/headshot.jpg';
+---
+
+<BaseLayout title={site.name}>
+  <section class="intro">
+    <Image
+      class="headshot"
+      src={headshot}
+      alt={`Portrait of ${site.name}`}
+      width={200}
+      height={200}
+      loading="eager"
+    />
+
+    <div class="intro-copy">
+      <h1>{site.name}</h1>
+      <p class="lede">
+        Undergraduate at William &amp; Mary, studying Computational and Applied
+        Mathematics and Statistics, and Biology.
+      </p>
+
+      <p>
+        I'm interested in the places where quantitative methods meet living
+        systems — modeling, probability, and the computation that makes both
+        usable. I keep a <a href={url('/research')}>research page</a> for
+        academic work and longer project write-ups, and I write more informally
+        over on the <a href={url('/blog')}>blog</a>. My code lives on GitHub
+        rather than being re-listed here — each repository's README tells that
+        story better than a summary would.
+      </p>
+
+      <p>
+        My background and coursework are on
+        the <a href={url('/about')}>about page</a>.
+      </p>
+
+      <p class="cta">
+        <a class="button" href={site.github} rel="noopener">View my GitHub →</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .intro {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .headshot {
+    border-radius: 50%;
+    border: 1px solid var(--color-accent-border);
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+  }
+
+  .intro-copy {
+    max-width: var(--measure);
+    display: grid;
+    gap: 1.35rem;
+  }
+
+  .lede {
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+    text-wrap: balance;
+  }
+
+  .cta {
+    margin-top: 0.75rem;
+  }
+
+  /* Side-by-side once there's room for the photo beside the text. */
+  @media (min-width: 46rem) {
+    .intro {
+      grid-template-columns: auto 1fr;
+      gap: 2.75rem;
+      align-items: start;
+    }
+
+    .headshot {
+      width: 200px;
+      height: 200px;
+    }
+  }
+</style>

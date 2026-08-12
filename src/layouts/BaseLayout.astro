@@ -1,0 +1,195 @@
+---
+import '@fontsource-variable/source-serif-4';
+import '@fontsource-variable/source-serif-4/wght-italic.css';
+import '../styles/global.css';
+import { site, navItems } from '../site';
+import { url, isActive } from '../lib/url';
+
+interface Props {
+  /** Page title, shown before the site name in the browser tab. */
+  title: string;
+  /** Overrides the default meta description for this page. */
+  description?: string;
+}
+
+const { title, description = site.description } = Astro.props;
+
+const pageTitle = title === site.name ? title : `${title} — ${site.name}`;
+const currentPath = Astro.url.pathname;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href={url('/favicon.svg')} />
+    <link rel="canonical" href={canonical} />
+
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+
+    <!-- Lets feed readers discover the blog automatically from any page. -->
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={`${site.name} — Blog`}
+      href={url('/rss.xml')}
+    />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="wordmark" href={url('/')}>{site.name}</a>
+        <nav aria-label="Primary">
+          <ul>
+            {
+              navItems.map((item) => (
+                <li>
+                  <a
+                    href={url(item.href)}
+                    aria-current={isActive(currentPath, item.href) ? 'page' : undefined}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    {/*
+      Optional full-bleed header region, rendered above the centred content
+      column and outside its max-width. Nothing renders unless a page supplies
+      it, so the default look stays purely typographic:
+
+        <div slot="page-header"> ... </div>
+
+      This is the seam to use if per-tab header images are ever wanted.
+    */}
+    <slot name="page-header" />
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <p>
+        © {new Date().getFullYear()} {site.name}
+        <span aria-hidden="true"> · </span>
+        <a href={site.github} rel="me noopener">GitHub</a>
+        {
+          site.linkedin && (
+            <>
+              <span aria-hidden="true"> · </span>
+              <a href={site.linkedin} rel="me noopener">
+                LinkedIn
+              </a>
+            </>
+          )
+        }
+        <span aria-hidden="true"> · </span>
+        <a href={url('/rss.xml')}>RSS</a>
+        {
+          site.email && (
+            <>
+              <span aria-hidden="true"> · </span>
+              <a href={`mailto:${site.email}`}>Email</a>
+            </>
+          )
+        }
+      </p>
+    </footer>
+  </body>
+</html>
+
+<style>
+  main {
+    flex: 1;
+    width: 100%;
+    max-width: var(--width-page);
+    margin-inline: auto;
+    padding: clamp(2.5rem, 7vw, 4.5rem) var(--space-gutter) 5rem;
+  }
+
+  /* --- Header ------------------------------------------------------------ */
+
+  .site-header {
+    border-bottom: 1px solid var(--color-rule);
+    background-color: var(--color-bg);
+  }
+
+  .header-inner {
+    max-width: var(--width-page);
+    margin-inline: auto;
+    padding: 1.5rem var(--space-gutter);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem 1.5rem;
+  }
+
+  .wordmark {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--color-text);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+
+  .wordmark:hover {
+    color: var(--color-accent-hover);
+  }
+
+  nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.5rem;
+  }
+
+  nav a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    padding-bottom: 0.2rem;
+    /* Reserve the underline's space so the active tab doesn't shift layout. */
+    border-bottom: 2px solid transparent;
+  }
+
+  nav a:hover {
+    color: var(--color-accent-hover);
+  }
+
+  nav a[aria-current='page'] {
+    color: var(--color-text);
+    border-bottom-color: var(--color-accent);
+  }
+
+  /* --- Footer ------------------------------------------------------------ */
+
+  .site-footer {
+    border-top: 1px solid var(--color-rule);
+    padding: 2rem var(--space-gutter);
+  }
+
+  .site-footer p {
+    max-width: var(--width-page);
+    margin-inline: auto;
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+</style>

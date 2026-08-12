@@ -1,0 +1,76 @@
+---
+import { render } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getBlogPosts, formatDate, isoDate } from '../../lib/content';
+import { url } from '../../lib/url';
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const posts = await getBlogPosts();
+  return posts.map((post) => ({
+    params: { id: post.id },
+    props: { post },
+  }));
+};
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<BaseLayout title={post.data.title} description={post.data.description}>
+  <article>
+    <header class="post-header">
+      <h1>{post.data.title}</h1>
+      <p class="meta">
+        <time datetime={isoDate(post.data.pubDate)}>
+          {formatDate(post.data.pubDate)}
+        </time>
+        {
+          post.data.updatedDate && (
+            <span>
+              {' · updated '}
+              <time datetime={isoDate(post.data.updatedDate)}>
+                {formatDate(post.data.updatedDate)}
+              </time>
+            </span>
+          )
+        }
+      </p>
+      {
+        post.data.tags.length > 0 && (
+          <p class="meta tags">{post.data.tags.join(' · ')}</p>
+        )
+      }
+    </header>
+
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+
+  <p class="back">
+    <a href={url('/blog')}>← All posts</a>
+  </p>
+</BaseLayout>
+
+<style>
+  .post-header {
+    max-width: var(--measure);
+    margin-bottom: 3rem;
+  }
+
+  .post-header .meta {
+    margin-top: 0.75rem;
+  }
+
+  .tags {
+    margin-top: 0.25rem;
+  }
+
+  .back {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-rule);
+    max-width: var(--measure);
+  }
+</style>

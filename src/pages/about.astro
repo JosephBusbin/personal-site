@@ -1,0 +1,160 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CvSection from '../components/CvSection.astro';
+import { site } from '../site';
+import { url } from '../lib/url';
+import {
+  education,
+  skills,
+  research,
+  projects,
+  experience,
+  leadership,
+  activities,
+  awards,
+} from '../cv';
+---
+
+<BaseLayout
+  title="About / CV"
+  description="Career background and CV for Joseph Busbin — undergraduate at William & Mary in Computational and Applied Mathematics and Statistics, and Biology."
+>
+  <h1>About</h1>
+
+  <div class="prose intro">
+    <p>
+      I'm an undergraduate at William &amp; Mary reading for a B.S. in
+      Computational and Applied Mathematics and Statistics alongside a second
+      major in Biology. The pairing is deliberate: I'm drawn to problems where
+      quantitative methods have something to say about living systems, and to
+      the modeling and computation that make that possible.
+    </p>
+
+    <p>
+      My code is on <a href={site.github} rel="noopener">GitHub</a>, which is the
+      authoritative list of what I've built rather than a summary maintained
+      here. Longer write-ups live on
+      the <a href={url('/research')}>research page</a>, and less formal writing
+      is on the <a href={url('/blog')}>blog</a>.
+    </p>
+  </div>
+
+  <p class="actions">
+    <a class="button" href={site.github} rel="noopener">GitHub profile →</a>
+    {site.linkedin && <a href={site.linkedin} rel="noopener">LinkedIn</a>}
+    {
+      site.cvPath && (
+        <a href={url(site.cvPath)} download>
+          Download CV (PDF)
+        </a>
+      )
+    }
+  </p>
+
+  <CvSection section={education} />
+
+  <section class="cv-section">
+    <h2>Skills</h2>
+    <dl class="skills">
+      {
+        skills.map((skill) => (
+          <>
+            <dt>{skill.group}</dt>
+            <dd>{skill.items}</dd>
+          </>
+        ))
+      }
+    </dl>
+  </section>
+
+  <CvSection section={research} />
+  <CvSection section={projects} />
+  <CvSection section={experience} />
+  <CvSection section={leadership} />
+
+  <section class="cv-section">
+    <h2>Activities</h2>
+    <ul class="activities">
+      {
+        activities.map((activity) => (
+          <li>
+            <strong>{activity.name}</strong>
+            <span class="note">{activity.note}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="cv-section">
+    <h2>Awards</h2>
+    <ul class="awards">
+      {awards.map((award) => <li>{award}</li>)}
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  .intro {
+    margin-top: 1.5rem;
+  }
+
+  .actions {
+    margin-top: 2.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .cv-section {
+    margin-top: 3.5rem;
+    max-width: var(--measure);
+  }
+
+  .cv-section h2 {
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--color-rule);
+  }
+
+  .skills {
+    margin-top: 1.75rem;
+    display: grid;
+    gap: 1rem 1.75rem;
+  }
+
+  .skills dt {
+    font-weight: 600;
+    color: var(--color-accent);
+  }
+
+  .skills dd {
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+
+  .activities {
+    margin-top: 1.75rem;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .activities .note {
+    display: block;
+    color: var(--color-text-muted);
+    margin-top: 0.15rem;
+  }
+
+  .awards {
+    margin-top: 1.5rem;
+    padding-left: 1.2rem;
+  }
+
+  @media (min-width: 40rem) {
+    .skills {
+      grid-template-columns: 9rem 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,131 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import {
+  getResearchEntries,
+  formatDate,
+  isoDate,
+  researchTypeLabels,
+} from '../../lib/content';
+import { url } from '../../lib/url';
+
+const entries = await getResearchEntries();
+---
+
+<BaseLayout
+  title="Research"
+  description="Academic and informal research, plus longer project write-ups, by Joseph Busbin."
+>
+  <h1>Research</h1>
+  <p class="page-intro">
+    Academic work, informal investigations, and longer project write-ups that
+    don't fit neatly into a repository README.
+  </p>
+
+  {
+    entries.length === 0 ? (
+      <p class="empty">Nothing posted here yet.</p>
+    ) : (
+      <ul class="entry-list">
+        {entries.map((entry) => (
+          <li>
+            <article>
+              <p class="meta type-line">
+                <span class="type">{researchTypeLabels[entry.data.type]}</span>
+                {entry.data.venue && <span>{` · ${entry.data.venue}`}</span>}
+                <span>
+                  {' · '}
+                  <time datetime={isoDate(entry.data.date)}>
+                    {formatDate(entry.data.date)}
+                  </time>
+                </span>
+              </p>
+
+              <h2>
+                <a href={url(`/research/${entry.id}`)}>{entry.data.title}</a>
+              </h2>
+
+              {entry.data.authors.length > 0 && (
+                <p class="meta authors">{entry.data.authors.join(', ')}</p>
+              )}
+
+              <p class="abstract">{entry.data.abstract}</p>
+
+              {entry.data.links.length > 0 && (
+                <p class="links">
+                  {entry.data.links.map((link, i) => (
+                    <>
+                      {i > 0 && <span aria-hidden="true"> · </span>}
+                      <a href={link.href} rel="noopener">
+                        {link.label}
+                      </a>
+                    </>
+                  ))}
+                </p>
+              )}
+            </article>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</BaseLayout>
+
+<style>
+  .page-intro {
+    max-width: var(--measure);
+    color: var(--color-text-muted);
+    margin-top: 0.75rem;
+  }
+
+  .entry-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 3rem;
+    display: grid;
+    gap: 3rem;
+    max-width: var(--measure);
+  }
+
+  .type-line {
+    margin-bottom: 0.4rem;
+  }
+
+  .type {
+    color: var(--color-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.8em;
+  }
+
+  .entry-list h2 {
+    font-size: var(--text-lg);
+  }
+
+  .entry-list h2 a {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .entry-list h2 a:hover {
+    color: var(--color-accent-hover);
+  }
+
+  .authors {
+    margin-top: 0.3rem;
+    font-style: italic;
+  }
+
+  .abstract {
+    margin-top: 0.7rem;
+  }
+
+  .links {
+    margin-top: 0.7rem;
+    font-size: var(--text-sm);
+  }
+
+  .empty {
+    margin-top: 3rem;
+    color: var(--color-text-muted);
+  }
+</style>

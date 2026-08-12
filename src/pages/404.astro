@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { url } from '../lib/url';
+---
+
+<BaseLayout title="Page not found">
+  <h1>Page not found</h1>
+  <div class="prose">
+    <p>
+      That page doesn't exist — it may have moved, or the link may be out of
+      date. Try the <a href={url('/')}>home page</a>,
+      the <a href={url('/blog')}>blog</a>, or
+      the <a href={url('/research')}>research page</a>.
+    </p>
+  </div>
+</BaseLayout>

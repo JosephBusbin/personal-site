@@ -1,0 +1,90 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getBlogPosts, formatDate, isoDate } from '../../lib/content';
+import { url } from '../../lib/url';
+
+const posts = await getBlogPosts();
+---
+
+<BaseLayout
+  title="Blog"
+  description="Informal writing and notes by Joseph Busbin."
+>
+  <h1>Blog</h1>
+  <p class="page-intro">
+    Informal writing — notes on things I'm learning, reading, or building.
+  </p>
+
+  {
+    posts.length === 0 ? (
+      <p class="empty">No posts yet. Check back soon.</p>
+    ) : (
+      <ul class="post-list">
+        {posts.map((post) => (
+          <li>
+            <article>
+              <h2>
+                <a href={url(`/blog/${post.id}`)}>{post.data.title}</a>
+              </h2>
+              <p class="meta">
+                <time datetime={isoDate(post.data.pubDate)}>
+                  {formatDate(post.data.pubDate)}
+                </time>
+                {post.data.draft && <span class="draft-tag">Draft</span>}
+              </p>
+              <p>{post.data.description}</p>
+            </article>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</BaseLayout>
+
+<style>
+  .page-intro {
+    max-width: var(--measure);
+    color: var(--color-text-muted);
+    margin-top: 0.75rem;
+  }
+
+  .post-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 3rem;
+    display: grid;
+    gap: 2.5rem;
+    max-width: var(--measure);
+  }
+
+  .post-list h2 {
+    font-size: var(--text-lg);
+  }
+
+  .post-list h2 a {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .post-list h2 a:hover {
+    color: var(--color-accent-hover);
+  }
+
+  .post-list .meta {
+    margin: 0.35rem 0 0.6rem;
+  }
+
+  /* Only rendered in dev -- drafts are filtered out of production builds. */
+  .draft-tag {
+    margin-left: 0.6rem;
+    border: 1px solid var(--color-accent-border);
+    border-radius: 3px;
+    padding: 0.05em 0.4em;
+    color: var(--color-accent);
+  }
+
+  .empty {
+    margin-top: 3rem;
+    color: var(--color-text-muted);
+  }
+</style>

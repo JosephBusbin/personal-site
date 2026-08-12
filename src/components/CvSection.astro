@@ -1,0 +1,92 @@
+---
+import type { CvSection } from '../cv';
+
+interface Props {
+  section: CvSection;
+}
+
+const { section } = Astro.props;
+---
+
+<section class="cv-section">
+  <h2>{section.heading}</h2>
+  {
+    section.entries.map((entry) => (
+      <div class="cv-entry">
+        <div class="cv-entry-head">
+          <h3>{entry.title}</h3>
+          {entry.dates && <p class="meta dates">{entry.dates}</p>}
+        </div>
+
+        {(entry.subtitle || entry.location) && (
+          <p class="detail">
+            {entry.subtitle}
+            {entry.subtitle && entry.location && (
+              <span class="meta"> · {entry.location}</span>
+            )}
+            {!entry.subtitle && entry.location && (
+              <span class="meta">{entry.location}</span>
+            )}
+          </p>
+        )}
+
+        {entry.bullets && entry.bullets.length > 0 && (
+          <ul>
+            {entry.bullets.map((bullet) => (
+              <li>{bullet}</li>
+            ))}
+          </ul>
+        )}
+      </div>
+    ))
+  }
+</section>
+
+<style>
+  .cv-section {
+    margin-top: 3.5rem;
+    max-width: var(--measure);
+  }
+
+  .cv-section h2 {
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--color-rule);
+  }
+
+  .cv-entry {
+    margin-top: 2rem;
+  }
+
+  .cv-entry-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.2rem 1.5rem;
+  }
+
+  .cv-entry h3 {
+    font-size: var(--text-base);
+    font-weight: 600;
+  }
+
+  /* Keep the date on its own end of the line rather than wrapping mid-range. */
+  .dates {
+    white-space: nowrap;
+  }
+
+  .detail {
+    margin-top: 0.15rem;
+    color: var(--color-text);
+  }
+
+  ul {
+    margin-top: 0.6rem;
+    padding-left: 1.2rem;
+    color: var(--color-text-muted);
+  }
+
+  li + li {
+    margin-top: 0.4rem;
+  }
+</style>
