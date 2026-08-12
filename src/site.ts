@@ -29,7 +29,7 @@ export const site = {
    * '/joseph-busbin-cv.pdf'. Check it carries no contact details you'd rather
    * not have scraped -- anything committed here stays in git history.
    */
-  cvPath: null as string | null,
+  cvPath: '/joseph-busbin-cv.pdf' as string | null,
 };
 
 /** The fixed tab set. Adding a tab here adds it to the nav everywhere. */
