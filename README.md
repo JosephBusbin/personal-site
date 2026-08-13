@@ -119,6 +119,13 @@ This is what keeps a future move to a custom domain to a one-line change in
 `BaseLayout` exposes a `page-header` slot that renders full-bleed above the
 content column. Nothing renders unless a page fills it:
 
+```astro
+<BaseLayout title="Blog">
+  <div slot="page-header">…</div>
+  …
+</BaseLayout>
+```
+
 ## Changing PDF CV
 
 You simply replace the previous CV pdf file with one identically named 
@@ -128,15 +135,15 @@ at the file location which is the public folder.
 Commands: 
 npm run build
 
+```astro
 git add -A
-
-git commit -m "<insert commit message here>"
-
-git push
+```
 
 ```astro
-<BaseLayout title="Blog">
-  <div slot="page-header">…</div>
-  …
-</BaseLayout>
+git commit -m "<insert commit message here>"
 ```
+
+```astro
+git push
+```
+
