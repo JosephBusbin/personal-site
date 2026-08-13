@@ -31,10 +31,9 @@ export const education: CvSection = {
       dates: 'Expected May 2027',
       location: 'Williamsburg, VA',
       bullets: [
-        'GPA 3.6 · Dean’s List 2024, 2025, 2026',
+        'Dean’s List 2024, 2025, 2026',
         'Mathematics and computing: Data Structures, Algorithms, Software Development, Multivariable Calculus, Linear Algebra, Foundations of Mathematics, Ordinary Differential Equations, Mathematical Modeling in Biology, Probability',
-        'Life and physical sciences: Molecular Cell Biology, Microbiology, Animal Behavior, Organic Chemistry, General Chemistry, Introduction to Psychology',
-        'Beyond STEM: Creative Writing, Philosophy and Technology, Intermediate Spanish, Traditional Chinese Literature',
+        'Life and physical sciences: Molecular Cell Biology, Microbiology, Animal Behavior, Organic Chemistry, General Chemistry, Introduction to Psychology, Introduction to Physics',
       ],
     },
   ],
@@ -54,12 +53,12 @@ export const skills = [
   {
     group: 'Biology',
     items:
-      'Molecular techniques (gels, antibodies, immuno-methods); cell biology, protein structure and function, gene expression, transport signaling, enzymatic control. Microbiology lab work: streaking for isolation, culturing, staining, genetic screening, antibiotic resistance, transduction, phage-mediated gene selection. Observational and experimental behavioral study',
+      'Lab Skills: Streaking for isolation, culturing, staining, genetic screening, antibiotic resistance, transduction, phage-mediated gene selection. Observational and experimental behavioral study',
   },
   {
     group: 'Chemistry',
     items:
-      'Purification and analysis of organic and inorganic compounds, spectroscopy (¹H, ¹³C), gas chromatography, thin-layer chromatography, extractions, titrations, compound analysis',
+      'Lab Skills: Purification and analysis of organic and inorganic compounds, spectroscopy (¹H, ¹³C), gas chromatography, thin-layer chromatography, extractions, titrations, compound analysis',
   },
 ];
 
@@ -69,18 +68,19 @@ export const research: CvSection = {
     {
       title:
         'Nanoparticle delivery vehicles to the nucleus for gene repair',
-      subtitle: 'Literature review and experiment proposal',
+      subtitle: 'Class project: Literature review and experiment proposal',
       bullets: [
-        'Wrote an academic biology paper with a mock implementation of methods and results, applying cell biology and protein function to experimental design.',
+        'Wrote an mock academic biology paper with fictional implementation of methods and results, applying cell biology and protein function to experimental design. Primarily an exercise in writing.',
         'Developed literature search technique, research writing, and a working grasp of ethical research practice.',
       ],
     },
     {
-      title: 'Conveying understanding of complex topics in cinema presentation',
-      subtitle: 'Academic paper and formal presentation',
+      title: 'Mitocondria population dynamic modeling',
+      subtitle: 'Class project: Reconstrucuting a research paper and modifications',
       bullets: [
-        'Used both quantitative and qualitative approaches across experiment design, data collection, and interpretation.',
-        'Practiced citation, bibliography management, and peer review; delivered a formal presentation and oral defense.',
+        'Selected topic, conducted literature review and understood the mathmatical models used.',
+		'Reconstructed simulation of mathmatical model in MATLAB and solved both numerically as well as symbolicly.',
+		'Extended the model to simulate novel, more realistic behaviors of the biological system',
       ],
     },
   ],
@@ -125,15 +125,6 @@ export const experience: CvSection = {
       bullets: [
         'Serve a full breakfast each morning around guests’ preferences, dietary restrictions, and allergy concerns.',
         'Highly independent work in a small business: logistics, problem solving, and direct customer communication.',
-      ],
-    },
-    {
-      title: 'Chipotle Mexican Grill',
-      subtitle: 'Crew',
-      dates: 'April – August 2023',
-      bullets: [
-        'Delivered service to standard on schedule in a fast-paced, high-volume environment.',
-        'Coordinated responsibilities as part of a team under minimal oversight.',
       ],
     },
   ],

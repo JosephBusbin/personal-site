@@ -119,6 +119,21 @@ This is what keeps a future move to a custom domain to a one-line change in
 `BaseLayout` exposes a `page-header` slot that renders full-bleed above the
 content column. Nothing renders unless a page fills it:
 
+## Changing PDF CV
+
+You simply replace the previous CV pdf file with one identically named 
+at the file location which is the public folder. 
+
+### Reminder on how to ship changes to GitHub
+Commands: 
+npm run build
+
+git add -A
+
+git commit -m "<insert commit message here>"
+
+git push
+
 ```astro
 <BaseLayout title="Blog">
   <div slot="page-header">…</div>

@@ -1,8 +1,10 @@
 ---
-title: 'Starting this site'
-description: 'Why I built a personal site, and what I plan to put on it.'
+title: 'Starting and working this site'
+description: 'Sample post of the personal site, and how to work it.'
 pubDate: 2026-08-12
 tags: ['meta']
+draft: true
+updatedDate: 2026-08-13
 ---
 
 This is a sample post. Delete it once you've written a real one — or edit it in

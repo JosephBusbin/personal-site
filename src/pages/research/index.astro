@@ -17,8 +17,9 @@ const entries = await getResearchEntries();
 >
   <h1>Research</h1>
   <p class="page-intro">
-    Academic work, informal investigations, and longer project write-ups that
+    A selection of my academic work, informal investigations, and longer project write-ups that
     don't fit neatly into a repository README.
+	In roughly reverse chronological order. 
   </p>
 
   {
@@ -38,6 +39,7 @@ const entries = await getResearchEntries();
                     {formatDate(entry.data.date)}
                   </time>
                 </span>
+                {entry.data.draft && <span class="draft-tag">Draft</span>}
               </p>
 
               <h2>

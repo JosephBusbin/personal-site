@@ -12,7 +12,7 @@ const posts = await getBlogPosts();
 >
   <h1>Blog</h1>
   <p class="page-intro">
-    Informal writing — notes on things I'm learning, reading, or building.
+    Informal writings and notes on things I'm learning, reading, or building.
   </p>
 
   {
@@ -72,15 +72,6 @@ const posts = await getBlogPosts();
 
   .post-list .meta {
     margin: 0.35rem 0 0.6rem;
-  }
-
-  /* Only rendered in dev -- drafts are filtered out of production builds. */
-  .draft-tag {
-    margin-left: 0.6rem;
-    border: 1px solid var(--color-accent-border);
-    border-radius: 3px;
-    padding: 0.05em 0.4em;
-    color: var(--color-accent);
   }
 
   .empty {

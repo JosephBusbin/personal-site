@@ -2,6 +2,7 @@
 title: 'A Sample Project Write-Up'
 type: project
 date: 2026-07-15
+draft: true
 abstract: >-
   For projects where the README doesn't tell the whole story — the reasoning
   behind a design choice, what you tried that didn't work, or results worth

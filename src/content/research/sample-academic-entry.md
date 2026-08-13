@@ -2,6 +2,7 @@
 title: 'A Sample Academic Entry'
 type: academic
 date: 2026-05-01
+draft: true
 venue: 'Course project — MATH 400, William & Mary'
 authors: ['Joseph Busbin']
 abstract: >-

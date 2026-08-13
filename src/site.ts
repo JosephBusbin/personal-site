@@ -37,5 +37,5 @@ export const navItems = [
   { label: 'Home', href: '/' },
   { label: 'Blog', href: '/blog' },
   { label: 'Research', href: '/research' },
-  { label: 'About / CV', href: '/about' },
+  { label: 'About', href: '/about' },
 ] as const;
